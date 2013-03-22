@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<makedeb>
+  <control>
+	  <version>0.1</version>
+	  <name>makedeb</name>
+	  <maintener>Thomas Maurice</maintener>
+	  <mail>thomas.maurice@polytech-lille.fr</mail>
+	  <desc>Génère un script qui crée sur demande le paquet debian pour un programme</desc>
+	  <homepage>None</homepage>
+	  <category>1</category>
+	  <deps>
+	  	<package>bash</package>
+		  <package>python</package>
+	  </deps>
+  </control>
+
+  <dirs>
+	  <dir>/usr/local/bin</dir>
+	  <dir>/usr/local/bin/makedeb_bin</dir>
+	  <dir>/usr/local/man/man1/</dir>
+  </dirs>
+
+  <files>
+	  <file if="makedeb" of="/usr/local/bin" />
+	  <file if="makedeb_lib" of="/usr/local/bin" />
+	  <file if="man/makedeb.1" of="/usr/local/man/man1/" />
+  </files>
+</makedeb>

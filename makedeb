@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from makedeb_lib.project import *
+from makedeb_lib.conf import *
+import sys
+import os
+
+__author__ = "Thomas Maurice"
+__copyright__ = "Copyright 2013 Thomas Maurice"
+__credits__ = ["Thomas Maurice"]
+__license__ = "GPL"
+__version__ = "0.1"
+__maintainer__ = "Thomas Maurice"
+__email__ = "thomas.maurice@polytech-lille.net"
+__status__ = "Developement"
+
+def syntax():
+	print """makedeb : Builds deb-building scripts from .xml files.
+	$ makedeb [--suffix|--new]
+	$ makedeb <file.xml>
+	
+	Version 0.1 by Thomas Maurice
+	Mail : <Thomas.Maurice@polytech-lille.net>
+	"""
+
+def newFile():
+	print "Writting a new makedeb file to " + name + ".xml"
+	f = open(name + ".xml", "w")
+	f.write(sample.replace("@@name@@", name))
+
+if __name__ == "__main__":
+	if len(sys.argv) >= 2:
+		if sys.argv[1] == "--suffix":
+			print "_makedeb.sh"
+			exit()
+		elif sys.argv[1] == "--new":
+			# Nouveau fichier d'exemple
+			name = os.getcwd().split("/")
+			name = name[len(name)-1]
+			# If the file does not exist
+			if(not(os.path.isfile(name + ".xml"))):
+				newFile()
+				exit()
+			else: # If it exists, we will not overwrite
+				print "The file " + name + ".xml already exists. Will not overwrite."
+				exit()
+		elif tryFile(sys.argv[1]):
+			print "Using the file " + sys.argv[1]
+			p = Project(sys.argv[1])
+			p.outputScript()
+			exit()
+		else:
+			print "Invalid file or option " + sys.argv[1] + "\n"
+			syntax()
+			exit()
+			
+	f = getFile()
+	if f != "":
+		print "Using the file " + f
+		p = Project(f)
+		p.outputScript()
+	else:
+		syntax()

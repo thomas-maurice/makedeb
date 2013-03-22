@@ -1,0 +1,98 @@
+.TH makedeb 1 "Thomas MAURICE - Mars 2012" "Version 1.0" "makedeb Debian packager"
+
+.SH NAME
+	makedeb \- Creates deb-making scripts from a xml based configuration file.
+
+.SH SYNOPSIS
+makedeb
+.B [--suffix]
+
+makedeb
+.I <package.xml>
+
+.SH DESCRIPTION
+This program aims to easien the making of debian packages. It takes as
+an input the
+.I <packagename>.xml
+file which configures the options such as the maintener name and email, the
+homepage of the project, the arch, the installed size and so on. When you
+launch the program, you are not forced to specify the
+.I <packagename.xml>
+
+.SH OPTIONS
+.IP "--suffix"
+Displays the suffix of the scripts. For instance, if the suffix
+is
+.I _makedeb.sh
+, the program will display
+.I _makedeb.sh
+.IP "<packagename.xml>"
+Sets the xml file to use to build the script.
+
+.SH THE PACKAGENAME.XML FILE
+The root tag for the file is <makedeb></makedeb>, don't forget it !
+You have to create an xml file, named however you want, which will contain several tags.
+.TP
+.B control
+The control tag is the one which will set all the options for the package, it is divided
+in several subtags :
+.br
+  
+.br
+<name>packagename</name>
+.br
+<maintener>The maintener's name</name>
+.br
+<version>0.1</version>
+.br
+<mail>mail@host.tld</mail>
+.br
+<desc>Description</desc>
+.br
+<homepage>http://google.fr</homepage>
+.br
+<category>1</category>
+.br
+<deps>
+.br
+	<package>bash</package>
+.br
+</deps>
+.br
+
+.TP
+.B dirs
+The dirs directory allows you to specify which directories willbe used
+to store your program's binaries and configuration. It's used as it :
+.br
+ 
+.br
+<dirs>
+.br
+	<dir>/usr/local/bin</dir>
+.br
+	<dir>/usr/local/etc</dir>
+.br
+<dirs>
+
+.TP
+.B files
+It's used to specifies where local files will be installed in the future
+host system :
+.br
+ 
+.br
+<files>
+.br
+	<file if="binary" of="/usr/local/bin" />
+.br
+	<file if="binary.conf" of="/usr/local/etc" />
+.br
+</files>
+
+.SH BUGS
+None :)
+
+.SH AUTEURS
+Thomas Maurice
+.I <thomas.maurice@polytech-lille.net>
